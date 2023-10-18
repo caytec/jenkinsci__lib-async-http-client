@@ -24,6 +24,7 @@ import org.testng.annotations.Test;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -113,7 +114,7 @@ public class SimpleAsyncHttpClientTest extends AbstractBasicTest {
             .setRequestTimeout(5 * 1000)
             .setUrl(getTargetUrl() + "/testPutZeroBytesFileTest.txt")
             .setHeader("Content-Type", "text/plain").build()) {
-      File tmpfile = File.createTempFile("testPutZeroBytesFile", ".tmp");
+      File tmpfile = Files.createTempFile("testPutZeroBytesFile", ".tmp").toFile();
       tmpfile.deleteOnExit();
 
       Future<Response> future = client.put(new FileBodyGenerator(tmpfile));

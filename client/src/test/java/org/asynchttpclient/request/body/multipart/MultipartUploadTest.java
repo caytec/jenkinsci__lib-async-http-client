@@ -105,7 +105,7 @@ public class MultipartUploadTest extends AbstractBasicTest {
     gzipped.add(true);
     gzipped.add(false);
 
-    File tmpFile = File.createTempFile("textbytearray", ".txt");
+    File tmpFile = Files.createTempFile("textbytearray", ".txt").toFile();
     try (OutputStream os = Files.newOutputStream(tmpFile.toPath())) {
       IOUtils.write(expectedContents.getBytes(UTF_8), os);
 
@@ -380,8 +380,7 @@ public class MultipartUploadTest extends AbstractBasicTest {
               } else {
                 LOGGER.debug("File field " + name + " with file name " + item.getName() + " detected.");
                 // Process the input stream
-                File tmpFile = File.createTempFile(UUID.randomUUID().toString() + "_MockUploadServlet",
-                        ".tmp");
+                File tmpFile = Files.createTempFile(UUID.randomUUID().toString() + "_MockUploadServlet", ".tmp").toFile();
                 tmpFile.deleteOnExit();
                 try (OutputStream os = Files.newOutputStream(tmpFile.toPath())) {
                   byte[] buffer = new byte[4096];

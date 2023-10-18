@@ -120,7 +120,7 @@ public class TestUtils {
     if (uri.isAbsolute() && !uri.isOpaque()) {
       return new File(uri);
     } else {
-      File tmpFile = File.createTempFile("tmpfile-", ".data", TMP_DIR);
+      File tmpFile = Files.createTempFile(TMP_DIR.toPath(), "tmpfile-", ".data").toFile();
       tmpFile.deleteOnExit();
       try (InputStream is = cl.getResourceAsStream(path)) {
         FileUtils.copyInputStreamToFile(is, tmpFile);
@@ -131,7 +131,7 @@ public class TestUtils {
 
   public static File createTempFile(int approxSize) throws IOException {
     long repeats = approxSize / TestUtils.PATTERN_BYTES.length + 1;
-    File tmpFile = File.createTempFile("tmpfile-", ".data", TMP_DIR);
+    File tmpFile = Files.createTempFile(TMP_DIR.toPath(), "tmpfile-", ".data").toFile();
     tmpFile.deleteOnExit();
     try (OutputStream out = Files.newOutputStream(tmpFile.toPath())) {
       for (int i = 0; i < repeats; i++) {
